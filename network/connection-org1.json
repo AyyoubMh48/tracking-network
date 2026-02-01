@@ -1,0 +1,89 @@
+{
+    "name": "postal-network",
+    "version": "1.0.0",
+    "client": {
+        "organization": "Org1",
+        "connection": {
+            "timeout": {
+                "peer": {
+                    "endorser": "300"
+                }
+            }
+        }
+    },
+    "organizations": {
+        "Org1": {
+            "mspid": "Org1MSP",
+            "peers": [
+                "peer-nairobi.org1.postal.com",
+                "peer-atlanta.org1.postal.com"
+            ],
+            "certificateAuthorities": [
+                "ca.org1.postal.com"
+            ]
+        },
+        "Org2": {
+            "mspid": "Org2MSP",
+            "peers": [
+                "peer-singapore.org2.postal.com"
+            ],
+            "certificateAuthorities": [
+                "ca.org2.postal.com"
+            ]
+        }
+    },
+    "peers": {
+        "peer-nairobi.org1.postal.com": {
+            "url": "grpcs://localhost:7051",
+            "tlsCACerts": {
+                "pem": "-----BEGIN CERTIFICATE-----\nMIICVDCCAfmgAwIBAgIQR9EAUoh0Rx2XCGgcrrf17TAKBggqhkjOPQQDAjB0MQsw\nCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\nYW5jaXNjbzEYMBYGA1UEChMPb3JnMS5wb3N0YWwuY29tMR4wHAYDVQQDExV0bHNj\nYS5vcmcxLnBvc3RhbC5jb20wHhcNMjYwMjAxMTEzNTAwWhcNMzYwMTMwMTEzNTAw\nWjB0MQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMN\nU2FuIEZyYW5jaXNjbzEYMBYGA1UEChMPb3JnMS5wb3N0YWwuY29tMR4wHAYDVQQD\nExV0bHNjYS5vcmcxLnBvc3RhbC5jb20wWTATBgcqhkjOPQIBBggqhkjOPQMBBwNC\nAASbV0voYCGRL80G5fHLmiv7PEOFIFkhHcRoc4WsJaF6pKYHtK/GlY85FxTESm1k\nY/k9vSx5pISVEkyMyQoHwqQQo20wazAOBgNVHQ8BAf8EBAMCAaYwHQYDVR0lBBYw\nFAYIKwYBBQUHAwIGCCsGAQUFBwMBMA8GA1UdEwEB/wQFMAMBAf8wKQYDVR0OBCIE\nII/C95AKUR5SpkMdSKXls3CCeETdgxDjiekVlO9GzuuzMAoGCCqGSM49BAMCA0kA\nMEYCIQDFmLTacxZRuqVXaPxpc+YO6VWh8uAK+Pi8M7JlupwRUgIhAIL3P2Bmrt41\nqAwS5NfEAD6kBsX1hUC43xsJz2f9PQYp\n-----END CERTIFICATE-----"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "peer-nairobi.org1.postal.com",
+                "hostnameOverride": "peer-nairobi.org1.postal.com"
+            }
+        },
+        "peer-atlanta.org1.postal.com": {
+            "url": "grpcs://localhost:8051",
+            "tlsCACerts": {
+                "pem": "-----BEGIN CERTIFICATE-----\nMIICVDCCAfmgAwIBAgIQR9EAUoh0Rx2XCGgcrrf17TAKBggqhkjOPQQDAjB0MQsw\nCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\nYW5jaXNjbzEYMBYGA1UEChMPb3JnMS5wb3N0YWwuY29tMR4wHAYDVQQDExV0bHNj\nYS5vcmcxLnBvc3RhbC5jb20wHhcNMjYwMjAxMTEzNTAwWhcNMzYwMTMwMTEzNTAw\nWjB0MQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMN\nU2FuIEZyYW5jaXNjbzEYMBYGA1UEChMPb3JnMS5wb3N0YWwuY29tMR4wHAYDVQQD\nExV0bHNjYS5vcmcxLnBvc3RhbC5jb20wWTATBgcqhkjOPQIBBggqhkjOPQMBBwNC\nAASbV0voYCGRL80G5fHLmiv7PEOFIFkhHcRoc4WsJaF6pKYHtK/GlY85FxTESm1k\nY/k9vSx5pISVEkyMyQoHwqQQo20wazAOBgNVHQ8BAf8EBAMCAaYwHQYDVR0lBBYw\nFAYIKwYBBQUHAwIGCCsGAQUFBwMBMA8GA1UdEwEB/wQFMAMBAf8wKQYDVR0OBCIE\nII/C95AKUR5SpkMdSKXls3CCeETdgxDjiekVlO9GzuuzMAoGCCqGSM49BAMCA0kA\nMEYCIQDFmLTacxZRuqVXaPxpc+YO6VWh8uAK+Pi8M7JlupwRUgIhAIL3P2Bmrt41\nqAwS5NfEAD6kBsX1hUC43xsJz2f9PQYp\n-----END CERTIFICATE-----"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "peer-atlanta.org1.postal.com",
+                "hostnameOverride": "peer-atlanta.org1.postal.com"
+            }
+        },
+        "peer-singapore.org2.postal.com": {
+            "url": "grpcs://localhost:9051",
+            "tlsCACerts": {
+                "pem": "-----BEGIN CERTIFICATE-----\nMIICVDCCAfmgAwIBAgIQdd9ec2iJsoFTfHqjttItATAKBggqhkjOPQQDAjB0MQsw\nCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\nYW5jaXNjbzEYMBYGA1UEChMPb3JnMi5wb3N0YWwuY29tMR4wHAYDVQQDExV0bHNj\nYS5vcmcyLnBvc3RhbC5jb20wHhcNMjYwMjAxMTEzNTAwWhcNMzYwMTMwMTEzNTAw\nWjB0MQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMN\nU2FuIEZyYW5jaXNjbzEYMBYGA1UEChMPb3JnMi5wb3N0YWwuY29tMR4wHAYDVQQD\nExV0bHNjYS5vcmcyLnBvc3RhbC5jb20wWTATBgcqhkjOPQIBBggqhkjOPQMBBwNC\nAAQ/v0TB7+XKkpHNO2JCb6X+WvRRUJG/yaqOBD6O9eCsFUyTe3WKnDBgvZRHopj1\nX6HMdOC7oOyrfrYZt97Sa/9Po20wazAOBgNVHQ8BAf8EBAMCAaYwHQYDVR0lBBYw\nFAYIKwYBBQUHAwIGCCsGAQUFBwMBMA8GA1UdEwEB/wQFMAMBAf8wKQYDVR0OBCIE\nIAjoyddWa0oCO4xYHDUeKX4tWA4TJSaa8WN2I1Fpkpg+MAoGCCqGSM49BAMCA0kA\nMEYCIQD2O/eVCvPURpuUy6pw3f46Z2oPMBYgUdxuPY5XoBaliQIhAIkSc2G/x/I6\nNnxnlKhpSxIm8/UZlFJyDNwNKMuhJUI1\n-----END CERTIFICATE-----"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "peer-singapore.org2.postal.com",
+                "hostnameOverride": "peer-singapore.org2.postal.com"
+            }
+        }
+    },
+    "certificateAuthorities": {
+        "ca.org1.postal.com": {
+            "url": "https://localhost:7054",
+            "caName": "ca-org1",
+            "tlsCACerts": {
+                "pem": ["-----BEGIN CERTIFICATE-----\nMIICTTCCAfSgAwIBAgIRAJiUph3XYffduBbqxK/ssSwwCgYIKoZIzj0EAwIwcTEL\nMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBG\ncmFuY2lzY28xGDAWBgNVBAoTD29yZzEucG9zdGFsLmNvbTEbMBkGA1UEAxMSY2Eu\nb3JnMS5wb3N0YWwuY29tMB4XDTI2MDIwMTExMzUwMFoXDTM2MDEzMDExMzUwMFow\ncTELMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNh\nbiBGcmFuY2lzY28xGDAWBgNVBAoTD29yZzEucG9zdGFsLmNvbTEbMBkGA1UEAxMS\nY2Eub3JnMS5wb3N0YWwuY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEVSSl\nae+MJY/s2KOiU+sd+ueCusTo0r0QuJcDXtN0XgLAAUkyxEQ2dJsz8tQMYh5cHACe\nX6Ul2GorTZTS7CCPrqNtMGswDgYDVR0PAQH/BAQDAgGmMB0GA1UdJQQWMBQGCCsG\nAQUFBwMCBggrBgEFBQcDATAPBgNVHRMBAf8EBTADAQH/MCkGA1UdDgQiBCBZeKZS\ngRQsYBB/E6KKFr0ZHMMoe5Hk830lUQ5K9Ff/AzAKBggqhkjOPQQDAgNHADBEAiA4\nxrOSD+MVtwX5HxzHI+NFf/ySPRZQMcqvhpVX1Hzw8QIgESOSZBtP1qomN/FODwD6\nHNpkGEXDVbymsiFrtamYo4w=\n-----END CERTIFICATE-----"]
+            },
+            "httpOptions": {
+                "verify": false
+            }
+        },
+        "ca.org2.postal.com": {
+            "url": "https://localhost:8054",
+            "caName": "ca-org2",
+            "tlsCACerts": {
+                "pem": ["-----BEGIN CERTIFICATE-----\nMIICTTCCAfSgAwIBAgIRAM/1D9dI8QgNADS5lbVKBBUwCgYIKoZIzj0EAwIwcTEL\nMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBG\ncmFuY2lzY28xGDAWBgNVBAoTD29yZzIucG9zdGFsLmNvbTEbMBkGA1UEAxMSY2Eu\nb3JnMi5wb3N0YWwuY29tMB4XDTI2MDIwMTExMzUwMFoXDTM2MDEzMDExMzUwMFow\ncTELMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNh\nbiBGcmFuY2lzY28xGDAWBgNVBAoTD29yZzIucG9zdGFsLmNvbTEbMBkGA1UEAxMS\nY2Eub3JnMi5wb3N0YWwuY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE+Fe5\nI/7c55TZbMYvAIkgPw6/FxHQUvbbm5tn9a35RK01w5IURhCEq8RImhBBIq05v4Kc\nDQkcLT2TtS2SJZSpyKNtMGswDgYDVR0PAQH/BAQDAgGmMB0GA1UdJQQWMBQGCCsG\nAQUFBwMCBggrBgEFBQcDATAPBgNVHRMBAf8EBTADAQH/MCkGA1UdDgQiBCCkcowT\nE0VNbCwfdwmhFb8nyr2sWCEhU/C+RBYvTJo6pDAKBggqhkjOPQQDAgNHADBEAiAa\nyv0dD0jXoxyFdOfyZIN7rFZfpF2tbMWJZRzlcb48jwIgNJCJD7DbQ5vh7Rrey5FC\n0uRY599kOY+CnutsHAsztDA=\n-----END CERTIFICATE-----"]
+            },
+            "httpOptions": {
+                "verify": false
+            }
+        }
+    }
+}

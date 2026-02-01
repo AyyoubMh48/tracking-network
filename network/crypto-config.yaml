@@ -1,0 +1,40 @@
+OrdererOrgs:
+  - Name: Orderer
+    Domain: postal.com
+    EnableNodeOUs: true
+    Specs:
+      - Hostname: orderer
+        SANS:
+          - localhost
+
+PeerOrgs:
+  - Name: Org1
+    Domain: org1.postal.com
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+      SANS:
+        - localhost
+    Specs:
+      - Hostname: peer-nairobi
+        SANS:
+          - localhost
+      - Hostname: peer-atlanta
+        SANS:
+          - localhost
+    Users:
+      Count: 1
+
+  - Name: Org2
+    Domain: org2.postal.com
+    EnableNodeOUs: true
+    Template:
+      Count: 1
+      SANS:
+        - localhost
+    Specs:
+      - Hostname: peer-singapore
+        SANS:
+          - localhost
+    Users:
+      Count: 1

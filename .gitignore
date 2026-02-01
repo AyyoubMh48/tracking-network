@@ -1,0 +1,56 @@
+# Dependencies
+node_modules/
+application/node_modules/
+chaincode/node_modules/
+
+# Wallet (contains user credentials - sensitive)
+application/wallet/
+
+# Hyperledger Fabric binaries (downloaded during setup)
+bin/
+config/
+
+# Generated crypto materials
+network/crypto-config/
+network/channel-artifacts/
+
+# Chaincode packages
+network/*.tar.gz
+*.tar.gz
+
+# Logs
+*.log
+logs/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE and editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Debug files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+dist/
+build/
+
+# Test coverage
+coverage/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
