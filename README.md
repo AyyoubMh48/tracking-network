@@ -2,6 +2,8 @@
 
 A Hyperledger Fabric blockchain network for tracking postal parcels across multiple cities and organizations.
 
+> 📚 **Need to understand the project?** See [DOCUMENTATION.md](DOCUMENTATION.md) for a complete explanation of concepts, architecture, and how everything works.
+
 ## Network Architecture
 
 ```
@@ -342,3 +344,213 @@ The chaincode emits the following events:
   }
   ```
 
+---
+
+## 🎯 Audit Validation Guide
+
+Follow these steps to validate all audit requirements:
+
+### ✅ 1. Is there documentation provided to launch the network?
+
+**Answer:** YES - This README.md file and [DOCUMENTATION.md](DOCUMENTATION.md) provide complete documentation.
+
+---
+
+### ✅ 2. Try to launch the network
+
+```bash
+# Step 1: Install Fabric binaries (if not already installed)
+curl -sSL https://bit.ly/2ysbOFE | bash -s -- 2.4.0 1.5.2 -s
+export PATH=$PATH:$(pwd)/bin
+
+# Step 2: Start the network
+cd network
+chmod +x *.sh
+./start.sh
+
+# Step 3: Deploy chaincode
+./deployChaincode.sh
+```
+
+---
+
+### ✅ 3. Can you confirm that the network was created?
+
+```bash
+# Run this command to see all running containers
+docker ps --format "table {{.Names}}\t{{.Status}}"
+```
+
+**Expected Output:**
+```
+NAMES                            STATUS
+cli                              Up
+peer-nairobi.org1.postal.com     Up
+peer-atlanta.org1.postal.com     Up
+peer-singapore.org2.postal.com   Up
+orderer.postal.com               Up
+ca_org1                          Up
+ca_org2                          Up
+```
+
+---
+
+### ✅ 4. Try to create a user
+
+```bash
+cd application
+npm install
+node enrollAdmin.js
+node cli.js create-user john employee
+```
+
+---
+
+### ✅ 5. Can you confirm that the user was created?
+
+**Expected Output:**
+```
+Successfully enrolled admin user "admin" and imported it into the wallet
+Successfully created user "john" with role "employee"
+```
+
+You can also verify by checking the wallet folder:
+```bash
+ls application/wallet/
+```
+
+---
+
+### ✅ 6. Create a parcel with a random address
+
+```bash
+docker exec cli peer chaincode invoke \
+  -o orderer.postal.com:7050 --tls \
+  --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/postal.com/orderers/orderer.postal.com/msp/tlscacerts/tlsca.postal.com-cert.pem \
+  -C postalservices -n postal \
+  --peerAddresses peer-nairobi.org1.postal.com:7051 \
+  --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.postal.com/peers/peer-nairobi.org1.postal.com/tls/ca.crt \
+  --peerAddresses peer-singapore.org2.postal.com:9051 \
+  --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.postal.com/peers/peer-singapore.org2.postal.com/tls/ca.crt \
+  -c '{"function":"createParcel","Args":["PKG001","742 Evergreen Terrace, Springfield"]}'
+```
+
+---
+
+### ✅ 7. Do you have feedback that the parcel was created?
+
+**Expected Output:**
+```
+Chaincode invoke successful. result: status:200 payload:"{\"docType\":\"parcel\",\"id\":\"PKG001\",\"destination\":\"742 Evergreen Terrace, Springfield\",\"currentAddress\":\"Sorting Center\",\"status\":\"GOOD\"...}"
+```
+
+**Verify by querying:**
+```bash
+docker exec cli peer chaincode query \
+  -C postalservices -n postal \
+  -c '{"function":"queryParcel","Args":["PKG001"]}'
+```
+
+---
+
+### ✅ 8. Modify the address of the parcel with the transport command
+
+```bash
+docker exec cli peer chaincode invoke \
+  -o orderer.postal.com:7050 --tls \
+  --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/postal.com/orderers/orderer.postal.com/msp/tlscacerts/tlsca.postal.com-cert.pem \
+  -C postalservices -n postal \
+  --peerAddresses peer-nairobi.org1.postal.com:7051 \
+  --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.postal.com/peers/peer-nairobi.org1.postal.com/tls/ca.crt \
+  --peerAddresses peer-singapore.org2.postal.com:9051 \
+  --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.postal.com/peers/peer-singapore.org2.postal.com/tls/ca.crt \
+  -c '{"function":"transport","Args":["PKG001","456 Oak Avenue, Singapore"]}'
+```
+
+---
+
+### ✅ 9. Was the address of the parcel modified?
+
+**Verify with query:**
+```bash
+docker exec cli peer chaincode query \
+  -C postalservices -n postal \
+  -c '{"function":"queryParcel","Args":["PKG001"]}'
+```
+
+**Expected Output:**
+```json
+{
+  "docType": "parcel",
+  "id": "PKG001",
+  "destination": "742 Evergreen Terrace, Springfield",
+  "currentAddress": "456 Oak Avenue, Singapore",
+  "status": "GOOD"
+}
+```
+
+The `currentAddress` changed from `"Sorting Center"` to `"456 Oak Avenue, Singapore"` ✅
+
+---
+
+### ✅ 10. Modify the status of the package
+
+```bash
+docker exec cli peer chaincode invoke \
+  -o orderer.postal.com:7050 --tls \
+  --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/postal.com/orderers/orderer.postal.com/msp/tlscacerts/tlsca.postal.com-cert.pem \
+  -C postalservices -n postal \
+  --peerAddresses peer-nairobi.org1.postal.com:7051 \
+  --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.postal.com/peers/peer-nairobi.org1.postal.com/tls/ca.crt \
+  --peerAddresses peer-singapore.org2.postal.com:9051 \
+  --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.postal.com/peers/peer-singapore.org2.postal.com/tls/ca.crt \
+  -c '{"function":"changeStatus","Args":["PKG001","DAMAGED"]}'
+```
+
+---
+
+### ✅ 11. Is the status of the package modified?
+
+**Verify with query:**
+```bash
+docker exec cli peer chaincode query \
+  -C postalservices -n postal \
+  -c '{"function":"queryParcel","Args":["PKG001"]}'
+```
+
+**Expected Output:**
+```json
+{
+  "docType": "parcel",
+  "id": "PKG001",
+  "destination": "742 Evergreen Terrace, Springfield",
+  "currentAddress": "456 Oak Avenue, Singapore",
+  "status": "DAMAGED"
+}
+```
+
+The `status` changed from `"GOOD"` to `"DAMAGED"` ✅
+
+---
+
+## 📋 Audit Checklist Summary
+
+| # | Question | Command/Action | Expected Result |
+|---|----------|----------------|-----------------|
+| 1 | Documentation exists? | Check README.md | ✅ Yes |
+| 2 | Launch network | `./start.sh` | Network started successfully |
+| 3 | Confirm network created | `docker ps` | 7 containers running |
+| 4 | Create user | `node cli.js create-user` | Success message |
+| 5 | Confirm user created | Check output | User in wallet |
+| 6 | Create parcel | `createParcel` invoke | status:200 |
+| 7 | Feedback parcel created | Query parcel | JSON returned |
+| 8 | Transport parcel | `transport` invoke | status:200 |
+| 9 | Address modified? | Query parcel | currentAddress changed |
+| 10 | Change status | `changeStatus` invoke | status:200 |
+| 11 | Status modified? | Query parcel | status: DAMAGED |
+
+---
+
+## License
+
+MIT
