@@ -2,8 +2,6 @@
 
 A Hyperledger Fabric blockchain network for tracking postal parcels across multiple cities and organizations.
 
-> 📚 **Need to understand the project?** See [DOCUMENTATION.md](DOCUMENTATION.md) for a complete explanation of concepts, architecture, and how everything works.
-
 ## Network Architecture
 
 ```
